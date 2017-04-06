@@ -32,12 +32,6 @@
     <ClInclude Include="EdkClass\NetProtocolStack.h">
       <Filter>头文件\EdkClass</Filter>
     </ClInclude>
-    <ClInclude Include="MediaAccess.h">
-      <Filter>头文件\EdkClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Video.h">
-      <Filter>头文件\EdkClass</Filter>
-    </ClInclude>
     <ClInclude Include="Helper.h">
       <Filter>头文件\EdkClass</Filter>
     </ClInclude>
@@ -52,6 +46,15 @@
     </ClInclude>
     <ClInclude Include="Config.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EdkClass\Helper.h">
+      <Filter>头文件\EdkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="EdkClass\MediaAccess.h">
+      <Filter>头文件\EdkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="EdkClass\Video.h">
+      <Filter>头文件\EdkClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
