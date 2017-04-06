@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C9219C09-88C0-41C8-82BC-5C017B149419}</ProjectGuid>
-    <RootNamespace>HashKvLib</RootNamespace>
+    <ProjectGuid>{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}</ProjectGuid>
+    <RootNamespace>XmlParserLib</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -111,10 +111,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HashKvLib.c" />
+    <ClCompile Include="XmlParserLib.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="HashKvLib.inf" />
+    <None Include="XmlParserLib.inf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

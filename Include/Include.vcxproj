@@ -114,11 +114,13 @@
     <ClCompile Include="Null.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="EdkClass\Common.h" />
     <ClInclude Include="EdkClass\NetProtocolStack.h" />
     <ClInclude Include="ExtTypes.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Lib\HashKvLib.h" />
+    <ClInclude Include="Lib\XmlParserLib.h" />
     <ClInclude Include="MediaAccess.h" />
     <ClInclude Include="Video.h" />
   </ItemGroup>

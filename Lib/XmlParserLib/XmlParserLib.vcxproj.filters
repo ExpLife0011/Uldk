@@ -15,11 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HashKvLib.c">
+    <ClCompile Include="XmlParserLib.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="HashKvLib.inf" />
+    <None Include="XmlParserLib.inf" />
   </ItemGroup>
 </Project>

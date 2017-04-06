@@ -1,0 +1,24 @@
+
+[Defines]
+	INF_VERSION = 0x00010006
+	BASE_NAME = HashKvLib
+	MODULE_TYPE = DXE_DRIVER
+	VERSION_STRING = 1.0
+	LIBRARY_CLASS = HashKvLib
+
+[Sources]
+
+	HashKvLib.c
+
+[Packages]
+
+	MdePkg/MdePkg.dec
+	MdeModulePkg/MdeModulePkg.dec
+	Uldk/Uldk.dec
+
+[LibraryClasses]
+	
+	BaseLib
+	BaseMemoryLib
+	UefiLib
+	PrintLib

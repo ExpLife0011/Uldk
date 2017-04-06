@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "Include\Include.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HashKvLib", "Lib\HashKvLib\HashKvLib.vcxproj", "{C9219C09-88C0-41C8-82BC-5C017B149419}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlParserLib", "Lib\XmlParserLib\XmlParserLib.vcxproj", "{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,11 +45,20 @@ Global
 		{C9219C09-88C0-41C8-82BC-5C017B149419}.Release|x64.Build.0 = Release|x64
 		{C9219C09-88C0-41C8-82BC-5C017B149419}.Release|x86.ActiveCfg = Release|Win32
 		{C9219C09-88C0-41C8-82BC-5C017B149419}.Release|x86.Build.0 = Release|Win32
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Debug|x64.ActiveCfg = Debug|x64
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Debug|x64.Build.0 = Debug|x64
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Debug|x86.ActiveCfg = Debug|Win32
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Debug|x86.Build.0 = Debug|Win32
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Release|x64.ActiveCfg = Release|x64
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Release|x64.Build.0 = Release|x64
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Release|x86.ActiveCfg = Release|Win32
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C9219C09-88C0-41C8-82BC-5C017B149419} = {23F07D9F-5F23-42F4-9C0F-5510FEE2183F}
+		{B7438DB1-23B3-4126-9D8B-9FB602D05D6A} = {23F07D9F-5F23-42F4-9C0F-5510FEE2183F}
 	EndGlobalSection
 EndGlobal
