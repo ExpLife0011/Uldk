@@ -56,5 +56,8 @@
     <ClInclude Include="EdkClass\Video.h">
       <Filter>头文件\EdkClass</Filter>
     </ClInclude>
+    <ClInclude Include="Lib\MtftpLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

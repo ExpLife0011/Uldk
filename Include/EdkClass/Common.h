@@ -16,3 +16,5 @@
 #include <Library/MemoryAllocationLib.h>
 
 #include <Library/UefiBootServicesTableLib.h>
+
+#include <Protocol/ServiceBinding.h>

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4558700F-DC92-481F-8A43-B4694AB532CB}</ProjectGuid>
-    <RootNamespace>Include</RootNamespace>
+    <ProjectGuid>{CDCBA012-24CB-479A-BCF8-32A8AC98ACD8}</ProjectGuid>
+    <RootNamespace>MtftpLib</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../MdePkg/Include/X64;../../Uldk/Include;../../MdePkg/Include;../../MdeModulePkg/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../MdePkg/Include/X64;../../../Uldk/Include;../../../MdePkg/Include;../../../MdeModulePkg/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,20 +111,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Null.c" />
+    <ClCompile Include="MtftpLib.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="EdkClass\Common.h" />
-    <ClInclude Include="EdkClass\Helper.h" />
-    <ClInclude Include="EdkClass\MediaAccess.h" />
-    <ClInclude Include="EdkClass\NetProtocolStack.h" />
-    <ClInclude Include="EdkClass\Video.h" />
-    <ClInclude Include="ExtTypes.h" />
-    <ClInclude Include="Helper.h" />
-    <ClInclude Include="Lib\HashKvLib.h" />
-    <ClInclude Include="Lib\MtftpLib.h" />
-    <ClInclude Include="Lib\XmlParserLib.h" />
+    <None Include="MtftpLib.inf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

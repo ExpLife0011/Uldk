@@ -1,0 +1,30 @@
+
+[Defines]
+	INF_VERSION = 0x00010006
+	BASE_NAME = MtftpLib
+	MODULE_TYPE = DXE_DRIVER
+	VERSION_STRING = 1.0
+	LIBRARY_CLASS = MtftpLib
+
+[Sources]
+
+	HashKvLib.c
+
+[Packages]
+
+	MdePkg/MdePkg.dec
+	MdeModulePkg/MdeModulePkg.dec
+	Uldk/Uldk.dec
+
+[LibraryClasses]
+	
+	BaseLib
+	BaseMemoryLib
+	UefiLib
+	PrintLib
+	NetLib
+
+[Protocols]
+
+	gEfiMtftp4ProtocolGuid
+	gEfiMtftp4ServiceBindingProtocolGuid
