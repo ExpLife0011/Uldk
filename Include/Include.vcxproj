@@ -114,6 +114,7 @@
     <ClCompile Include="Null.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="EdkClass\Common.h" />
     <ClInclude Include="EdkClass\Helper.h" />
@@ -121,10 +122,21 @@
     <ClInclude Include="EdkClass\NetProtocolStack.h" />
     <ClInclude Include="EdkClass\Video.h" />
     <ClInclude Include="ExtTypes.h" />
-    <ClInclude Include="Helper.h" />
+    <ClInclude Include="Lib\DeviceHelperLib.h" />
+    <ClInclude Include="Lib\EnvMgrLib.h" />
+    <ClInclude Include="Lib\FileLib.h" />
     <ClInclude Include="Lib\HashKvLib.h" />
+    <ClInclude Include="Lib\ImageDecoderLib.h" />
     <ClInclude Include="Lib\MtftpLib.h" />
+    <ClInclude Include="Lib\ResourceLib.h" />
+    <ClInclude Include="Lib\SearchLib.h" />
+    <ClInclude Include="Lib\VideoLib.h" />
     <ClInclude Include="Lib\XmlParserLib.h" />
+    <ClInclude Include="LwGui\Component.h" />
+    <ClInclude Include="LwGui\Form.h" />
+    <ClInclude Include="LwGui\Label.h" />
+    <ClInclude Include="LwGui\LwGuiLib.h" />
+    <ClInclude Include="LwGui\Textbox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

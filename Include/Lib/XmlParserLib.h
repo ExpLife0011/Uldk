@@ -52,3 +52,16 @@ EFIAPI
 XpFreeSection(
 	XML_SECTION* CurSection
 );
+
+XML_SECTION*
+EFIAPI
+XpFindFirstNodeByName(
+	XML_SECTION* Root,
+	CHAR16* Name
+);
+
+XML_SECTION*
+EFIAPI
+XpFindNodeById(
+	XML_SECTION* Root,
+	CHAR16* Id);

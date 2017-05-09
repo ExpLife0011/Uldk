@@ -72,7 +72,14 @@ HkFindPairInHashKv(
 /* 一些类型的默认Hash方法 */
 
 UINT16
-EFIAPI*
+EFIAPI
 Default_String_Map_Proc(
 	IN	BYTE*			Key
+);
+
+BOOLEAN
+EFIAPI
+Default_String_Cmp_Proc(
+	IN	BYTE*			Src,
+	IN	BYTE*			Dst
 );

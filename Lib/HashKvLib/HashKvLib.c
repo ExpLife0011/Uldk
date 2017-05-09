@@ -7,7 +7,7 @@
 /* Ä¬ÈÏ×Ö·û´®Hashº¯Êý */
 
 UINT16
-EFIAPI* 
+EFIAPI
 Default_String_Map_Proc(
 	IN	BYTE*			Key
 ) {
@@ -20,6 +20,19 @@ Default_String_Map_Proc(
 		V += String[i];
 	
 	return V % SLOT_SIZE;
+
+}
+
+/* Ä¬ÈÏ×Ö·û´®±È½Ïº¯Êý */
+
+BOOLEAN
+EFIAPI
+Default_String_Cmp_Proc(
+	IN	BYTE*			Src,
+	IN	BYTE*			Dst
+) {
+
+	return (StrCmp((CHAR16*)Src, (CHAR16*)Dst) == 0);
 
 }
 
@@ -74,11 +87,12 @@ HkFindPairInHashKv(
 
 	UINT16 Hv = HkGetHashValue(HashKv, Key);
 	PKV_PAIR Cur = HashKv->Heads[Hv];
+
 	while (Cur != NULL)
 	{
 		if (HashKv->CmpProc(Cur->Key, Key))
 			return Cur;
-
+		
 		Cur = Cur->Next;
 	}
 

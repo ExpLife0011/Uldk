@@ -122,7 +122,7 @@ UINTN
 EFIAPI
 MtftpQueryFileSize(
 	IN TFTP_IO*					TftpIo,
-	IN CHAR16*					FileName
+	IN CHAR8*					FileName
 ) {
 
 	UINT32 RetSize;

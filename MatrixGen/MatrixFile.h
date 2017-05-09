@@ -55,8 +55,8 @@ typedef struct tagUflCharInfo {
 
 typedef struct _SECTION_NODE{
 	struct _SECTION_NODE	*Next;
-	FL_SECTION_INF	SectionInfo;
-	UFL_CHAR_INDEX	*CharList;
+	FL_SECTION_INF			SectionInfo;
+	UFL_CHAR_INDEX			*CharList;
 } SECTION_NODE, *PSECTION_NODE;
 
 #pragma pack(pop)

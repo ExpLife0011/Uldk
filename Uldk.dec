@@ -1,0 +1,25 @@
+
+[Defines]
+	DEC_SPECIFICATION              = 0x00010005
+	PACKAGE_NAME                   = Uldk
+	PACKAGE_GUID                   = DF5B81FC-642D-406A-B72D-C5887CA67207
+	PACKAGE_VERSION                = 0.3
+
+[Includes]
+	Include
+
+[LibraryClasses]
+
+	HashKvLib|Uldk/Lib/HashKvLib/HashKvLib.inf
+	XmlParserLib|Uldk/Lib/XmlParserLib/XmlParserLib.inf
+	EnvMgrLib|Uldk/Lib/EnvMgrLib/EnvMgrLib.inf
+	DeviceHelperLib|Uldk/Lib/DeviceHelperLib/DeviceHelperLib.inf
+	MtftpLib|Uldk/Lib/MtftpLib/MtftpLib.inf
+	FileLib|Uldk/Lib/FileHandleLib/FileLib.inf
+	SearchLib|Uldk/Lib/Search/Search.inf
+	ImageDecoderLib|Uldk/Lib/ImageDecoderLib/ImageDecoderLib.inf
+	VideoLib|Uldk/Lib/VideoLib/VideoLib.inf
+	ResourceLib|Uldk/Lib/ResourceLib/ResourceLib.inf
+	LwGuiLib|Uldk/Lib/LwGuiLib/LwGuiLib.inf
+
+[Protocols]

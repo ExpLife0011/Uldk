@@ -5,10 +5,11 @@
 	MODULE_TYPE = DXE_DRIVER
 	VERSION_STRING = 1.0
 	LIBRARY_CLASS = MtftpLib
+	FILE_GUID = BDD1DA21-9F09-415D-90DB-2F243627E127
 
 [Sources]
 
-	HashKvLib.c
+	MtftpLib.c
 
 [Packages]
 
@@ -26,5 +27,6 @@
 
 [Protocols]
 
+	gEfiDhcp4ProtocolGuid
 	gEfiMtftp4ProtocolGuid
 	gEfiMtftp4ServiceBindingProtocolGuid

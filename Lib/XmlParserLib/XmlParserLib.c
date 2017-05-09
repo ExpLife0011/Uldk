@@ -349,6 +349,62 @@ XpReadHeader(
 
 }
 
+XML_SECTION*
+EFIAPI
+XpFindFirstNodeByName(
+	XML_SECTION* Root,
+	CHAR16* Name
+) {
+
+	XML_SECTION* Sec = NULL;
+
+	if (StrCmp(Root->SectionName, Name) == 0)
+		return Root;
+
+	/*
+	PKV_PAIR NodeKv = HkFindPairInHashKv(&Root->ChildrenHashKV, (BYTE*)Name);
+	if (NodeKv != NULL)
+		return (XML_SECTION*)NodeKv->Value;
+		*/
+
+	for (UINTN i = 0;i < Root->ChildrenCount;i++) {
+
+		Sec = XpFindFirstNodeByName(Root->Children[i], Name);
+		
+		if (Sec != NULL)
+			return Sec;
+
+	}
+
+	return NULL;
+
+}
+
+XML_SECTION*
+EFIAPI
+XpFindNodeById(
+	XML_SECTION* Root,
+	CHAR16* Id) {
+
+	XML_SECTION* Sec = NULL;
+	PKV_PAIR AttrKv = HkFindPairInHashKv(&Root->AttrHashKV, "Id");
+	if (AttrKv != NULL){
+		if (StrCmp((CHAR16*)AttrKv->Value, Id) == 0)
+			return Root;
+	}
+
+	for (UINTN i = 0;i < Root->ChildrenCount;i++) {
+
+		Sec = XpFindNodeById(Root->Children[i], Id);
+		if (Sec != NULL)
+			return Sec;
+
+	}
+
+	return NULL;
+
+}
+
 /* 读取XML体 */
 /* 暂时只支持UTF16的读取 */
 
@@ -365,11 +421,19 @@ XpReadSection(
 	{
 		Encode = 0;
 		Version = 0;
+
+		if (SectionStr[0] == 0xFEFF) {
+			SectionStr += 1;
+			Encode = ENCODE_UTF16;
+		}
+
 	}
 
 	XML_SECTION* NewSection = (XML_SECTION*)AllocateZeroPool(sizeof(XML_SECTION));
 	NewSection->AttrHashKV.MapProc = Default_String_Map_Proc;
-	NewSection->AttrHashKV.CmpProc = StrCmp;
+	NewSection->AttrHashKV.CmpProc = Default_String_Cmp_Proc;
+	NewSection->ChildrenHashKV.MapProc = Default_String_Map_Proc;
+	NewSection->ChildrenHashKV.CmpProc = Default_String_Cmp_Proc;
 
 	CHAR16* Iter = SectionStr;
 	if (!XpReadSectionTitle(Iter, NewSection, &Iter))
@@ -379,8 +443,9 @@ XpReadSection(
 	}
 
 #ifdef ENABLE_HASHKV
-	for (UINT16 i = 0;i < NewSection->AttrCount;i++)
-		HkGenerateHashKvNode(&NewSection->AttrHashKV, NewSection->Attributes[i], NewSection->Value[i]);
+	for (UINT16 i = 0;i < NewSection->AttrCount;i++) {
+		HkGenerateHashKvNode(&NewSection->AttrHashKV, (BYTE*)NewSection->Attributes[i], (BYTE*)NewSection->Value[i]);
+	}
 #endif
 
 	/* 循环读取子节点 */
@@ -397,8 +462,9 @@ XpReadSection(
 	}
 
 #ifdef ENABLE_HASHKV
-	for (UINT16 i = 0;i < ChildCount;i++)
-		GenerateHashKvNode(&NewSection->ChildrenHashKV, NewSection->Children[i]->SectionName, (CHAR16*)NewSection->Children[i]);
+	for (UINT16 i = 0;i < ChildCount;i++) {
+		HkGenerateHashKvNode(&NewSection->ChildrenHashKV, (BYTE*)NewSection->Children[i]->SectionName, (BYTE*)NewSection->Children[i]);
+	}
 #endif
 
 	if (ChildCount == 0)

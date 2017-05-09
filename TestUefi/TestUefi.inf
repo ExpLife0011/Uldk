@@ -1,0 +1,49 @@
+
+[Defines]
+	INF_VERSION = 0x00010006
+	BASE_NAME = bootx64
+	MODULE_TYPE = UEFI_APPLICATION
+	ENTRY_POINT = TestMain
+	VERSION_STRING = 1.0
+
+[Sources]
+
+	TestUefi.c
+
+[Packages]
+
+	MdePkg/MdePkg.dec
+	MdeModulePkg/MdeModulePkg.dec
+	Uldk/Uldk.dec
+
+[LibraryClasses]
+	
+	UefiApplicationEntryPoint
+	BaseLib
+	BaseMemoryLib
+	UefiLib
+	PrintLib
+	NetLib
+	HiiLib
+	UdpIoLib
+	FileHandleLib
+
+	DeviceHelperLib
+	EnvMgrLib
+	FileLib
+	XmlParserLib
+	HashKvLib
+	ImageDecoderLib
+	VideoLib
+	ResourceLib
+	LwGuiLib
+
+[Protocols]
+	
+	gEfiLoadedImageProtocolGuid
+
+[BuildOptions]
+	
+	#需要腾出足够的空间添加自己的资源节，如果能够默认的添加就更好了
+
+	MSFT:*_*_*_DLINK_FLAGS = /ALIGN:128

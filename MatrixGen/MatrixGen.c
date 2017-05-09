@@ -134,7 +134,7 @@ AllocWorkMemory(
 
 }
 
-/* 创建编码节 */
+/* 创建编码集合 */
 
 void 
 CreateFontSection(
@@ -155,6 +155,8 @@ CreateFontSection(
 	Last->Next = Node;
 
 }
+
+/* 生成单个集合的字模信息 */
 
 void 
 GenerateFontMatrix(
@@ -204,11 +206,22 @@ GenerateFontMatrix(
 
 }
 
+VOID Usage()
+{
+
+	printf("MatrixGen Usage:\n\tMatrixGen fontfile outputfile\n");
+
+}
+
 int main(int args,char** argv)
 {
 
-	if (args < 3)
+	if (args < 3) {
+		
+		Usage();
 		return 0;
+		
+	}
 
 	/* CJK in Unicode Range */
 
@@ -216,8 +229,10 @@ int main(int args,char** argv)
 	int error = 0;
 
 	FT_Face Face = InitializeFreeType(argv[1]);
-	if (Face == 0)
+	if (Face == 0) {
+		printf("libfreetype initialize fail\n");
 		return 0;
+	}
 
 	/* 未经测试的模块化代码 */
 

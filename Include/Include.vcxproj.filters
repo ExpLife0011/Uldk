@@ -19,6 +19,9 @@
     <Filter Include="头文件\Lib">
       <UniqueIdentifier>{dbeffca1-bb74-4534-8596-879e4ae87895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\LwGui">
+      <UniqueIdentifier>{acaeb2d4-2052-4cd1-ac09-ebaee0f358e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Null.c">
@@ -30,9 +33,6 @@
       <Filter>头文件\EdkClass</Filter>
     </ClInclude>
     <ClInclude Include="EdkClass\NetProtocolStack.h">
-      <Filter>头文件\EdkClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Helper.h">
       <Filter>头文件\EdkClass</Filter>
     </ClInclude>
     <ClInclude Include="Lib\HashKvLib.h">
@@ -58,6 +58,45 @@
     </ClInclude>
     <ClInclude Include="Lib\MtftpLib.h">
       <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ResourceLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\DeviceHelperLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\EnvMgrLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\FileLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\SearchLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImageDecoderLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\Component.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\Label.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\VideoLib.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\LwGuiLib.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\Form.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\Textbox.h">
+      <Filter>头文件\LwGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

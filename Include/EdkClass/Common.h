@@ -18,3 +18,5 @@
 #include <Library/UefiBootServicesTableLib.h>
 
 #include <Protocol/ServiceBinding.h>
+
+#include <Library/PrintLib.h>

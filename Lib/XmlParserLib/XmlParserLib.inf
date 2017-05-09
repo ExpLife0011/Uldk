@@ -1,10 +1,11 @@
 
 [Defines]
-	INF_VERSION = 0x00010006
+	INF_VERSION = 0x00010005
 	BASE_NAME = XmlParserLib
 	MODULE_TYPE = DXE_DRIVER
 	VERSION_STRING = 1.0
 	LIBRARY_CLASS = XmlParserLib
+	FILE_GUID = 89F23DB2-02CC-42EA-AABE-47CADD49F904
 
 [Sources]
 
@@ -22,3 +23,4 @@
 	BaseMemoryLib
 	UefiLib
 	PrintLib
+	HashKvLib
