@@ -13,7 +13,9 @@
 	Label.c
 	LwGuiLib.c
 	Attribute.c
-	#Textbox.c
+	Textbox.c
+	ListView.c
+	Image.c
 
 [Packages]
 

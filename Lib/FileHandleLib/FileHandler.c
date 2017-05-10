@@ -5,6 +5,8 @@
 
 #include "HandleSup.h"
 
+/* 读写文件时小于1M的文件直接读进内存 */
+
 static
 UINT32
 File_Read(

@@ -24,6 +24,7 @@ EmIsPxeBoot() {
 
 		if (DevicePathSubType(CurNode) == MSG_MAC_ADDR_DP) {
 			FreePool(TargetPath);
+			EmSetEnv(L"IsPxeBoot", L"1", 4);
 			return TRUE;
 		}
 		CurNode = NextDevicePathNode(CurNode);

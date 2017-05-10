@@ -76,7 +76,7 @@ PathNameParserToHandle(
 		}
 		else {
 
-			FileHandle->Device = SearchLibGetFirstFileSystem();
+			FileHandle->Device = DhGetRootDevice();
 			if (FileHandle->Device == NULL)
 				EXIT_WITH_STATUS(EFI_NO_MEDIA);
 			FileHandle->FileType = FILE;
@@ -289,6 +289,29 @@ FileLibSetFilePos(
 
 	FILE_HANDLE* FileObj = (FILE_HANDLE*)File;
 	return FileObj->Seek(File, NewPos);
+
+}
+
+EFI_STATUS
+EFIAPI
+FileLibDeleteIfExist(
+	IN CHAR16* PathName
+) {
+
+	FILE_HANDLE* FileObject = (FILE_HANDLE*)FileLibCreateFile(PathName, EFI_FILE_MODE_READ, 0);
+	if (FileObject == NULL)
+		return EFI_NOT_FOUND;
+
+	if (FileObject->FileType != FILE) {
+		FreePool(FileObject);
+		return EFI_UNSUPPORTED;
+	}
+
+	EFI_FILE_PROTOCOL* FileProt = (EFI_FILE_PROTOCOL*)FileObject->File;
+	FileProt->Delete(FileProt);
+	FreePool(FileObject);
+
+	return EFI_SUCCESS;
 
 }
 

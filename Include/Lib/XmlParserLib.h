@@ -32,13 +32,6 @@ typedef struct _XML_SECTION
 
 }XML_SECTION, *PXML_SECTION;
 
-UINT16
-EFIAPI
-TranslateAttrToValue(
-	UINT16 OriValue,
-	CHAR16* Value
-);
-
 BOOLEAN
 EFIAPI
 XpReadSection(

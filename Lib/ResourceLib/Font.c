@@ -72,10 +72,10 @@ ResLibGetCharWidth(
 	UFL_CHAR_INDEX* CharIndex = (UFL_CHAR_INDEX*)CharHandle;
 	UINT16 Width = CharIndex->Width;
 
-	if (Width > 0 && Width <= 8)
-		Width = 8;
-	else
-		Width = 16;
+	//if (Width > 0 && Width <= 8)
+	//	Width = 8;
+	//else
+	//	Width = 16;
 
 	return Width;
 

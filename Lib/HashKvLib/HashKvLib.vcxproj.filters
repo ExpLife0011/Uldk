@@ -18,6 +18,9 @@
     <ClCompile Include="HashKvLib.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Default.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="HashKvLib.inf" />

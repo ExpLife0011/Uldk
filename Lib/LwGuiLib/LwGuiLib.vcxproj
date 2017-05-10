@@ -114,7 +114,9 @@
     <ClCompile Include="Attribute.c" />
     <ClCompile Include="Component.c" />
     <ClCompile Include="Form.c" />
+    <ClCompile Include="Image.c" />
     <ClCompile Include="Label.c" />
+    <ClCompile Include="ListView.c" />
     <ClCompile Include="LwGuiLib.c" />
     <ClCompile Include="Textbox.c" />
   </ItemGroup>

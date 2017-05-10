@@ -44,6 +44,12 @@ typedef struct _GUI_FORM
 		);
 
 	VOID
+	(EFIAPI* DeleteChild)(
+		IN VOID* vSelf,
+		IN PCOMPONENT_COMMON_HEADER	Component
+	);
+
+	VOID
 	(EFIAPI* SetColor)(
 		IN VOID* vSelf,
 		IN EFI_GRAPHICS_OUTPUT_BLT_PIXEL* BgColor,

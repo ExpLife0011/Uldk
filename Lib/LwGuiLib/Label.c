@@ -25,6 +25,7 @@ Gui_Label_Draw(VOID* vSelf,
 
 	EFI_STATUS Status = EFI_SUCCESS;
 	PGUI_LABEL Self = (PGUI_LABEL)vSelf;
+	UINT16 StartX = 0;
 
 	if (Self->Attr.NeedRedraw == FALSE)
 		return;
@@ -84,59 +85,46 @@ Gui_Label_Draw(VOID* vSelf,
 	if (EFI_ERROR(Status))
 		goto EXIT;
 
-	/* 把文字填充到交换缓冲区 */
-	VideoLibBitblt(Self->Attr.BitmapObject,
-		TmpCanvas,
-		0,
-		0,
-		0,
-		0,
-		AbsRect.Width,
-		AbsRect.Height
-	);
-
-	GuiHandle->GOP->Blt(
-		GuiHandle->GOP,
-		VideoLibGetImageBitmapData(TmpCanvas),
-		EfiBltBufferToVideo,
-		0,
-		0,
-		0,
-		0,
-		AbsRect.Width,
-		AbsRect.Height,
-		10 * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL)
-	);
-
-	while (1);
-
 	/* 把临时缓冲区填充到交换缓冲区 */
 	Status = VideoLibBitblt(TmpCanvas,
 		FormObject->SwapObject, 
 		0, 
-		0,
-		0,
-		0, 
-		AbsRect.Width,
-		AbsRect.Height
-	);
-	if (EFI_ERROR(Status))
-		goto EXIT;
-
-	Print(L"ccc\n");
-
-	/* 把文字填充到交换缓冲区 */
-	VideoLibBitblt(Self->Attr.BitmapObject,
-		FormObject->SwapObject, 
-		0,
 		0,
 		AbsRect.x,
 		AbsRect.y,
 		AbsRect.Width,
 		AbsRect.Height
 	);
+	if (EFI_ERROR(Status))
+		goto EXIT;
 
-	Print(L"ccc\n");
+
+	switch (Self->Alignment)
+	{
+	case GUI_ALIGN_LEFT:
+		StartX = 5;
+		break;
+	case GUI_ALIGN_CENTER:
+		StartX = (AbsRect.Width / 2) - (VideoLibGetImageWidth(Self->Attr.BitmapObject) / 2);
+		break;
+	case GUI_ALIGN_RIGHT:
+		StartX = AbsRect.Width - VideoLibGetImageWidth(Self->Attr.BitmapObject) - 5;
+		break;
+	default:
+		StartX = 5;
+		break;
+	}
+
+	/* 把文字填充到交换缓冲区 */
+	VideoLibBitblt(Self->Attr.BitmapObject,
+		FormObject->SwapObject,
+		0,
+		0,
+		AbsRect.x + StartX,
+		AbsRect.y + 5,
+		VideoLibGetImageWidth(Self->Attr.BitmapObject),
+		VideoLibGetImageHeight(Self->Attr.BitmapObject)
+	);
 
 EXIT:
 
@@ -200,15 +188,16 @@ Gui_Label_SetText(
 		return;
 	}
 
-	Self->Attr.BitmapObject = VideoLibCreateBitmapObject(BITMAP_FORMAT_RGB,
+	Self->Attr.BitmapObject = VideoLibCreateBitmapObject(BITMAP_FORMAT_RGBA,
 		Width,
 		16
 	);
 
 	Self->Attr.FgColor.Reserved = 255;
-	VideoLibRenderFont(Self->Attr.BitmapObject, Text, *((UINT32*)&Self->Attr.FgColor));
-
-	Print(L"Label-SetText\n");
+	VideoLibRenderFont(Self->Attr.BitmapObject,
+		Self->Text,
+		*((UINT32*)&Self->Attr.FgColor)
+	);
 
 }
 
@@ -282,6 +271,7 @@ CreateLabel(
 	Label->Attr.Visible = TRUE;
 	Label->Attr.Alpha = 50;
 	Label->Alignment = GUI_ALIGN_LEFT;
+	Label->Type = GUI_TYPE_LABEL;
 
 	return Label;
 

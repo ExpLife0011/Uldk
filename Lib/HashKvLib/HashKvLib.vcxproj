@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Default.c" />
     <ClCompile Include="HashKvLib.c" />
   </ItemGroup>
   <ItemGroup>

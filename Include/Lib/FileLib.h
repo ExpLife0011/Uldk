@@ -39,6 +39,12 @@ FileLibSetFilePos(
 	IN UINT64 NewPos
 );
 
+EFI_STATUS
+EFIAPI
+FileLibDeleteIfExist(
+	IN CHAR16* PathName
+);
+
 EFI_HANDLE
 EFIAPI
 FileLibCreateFile(

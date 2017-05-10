@@ -1,9 +1,12 @@
 #pragma once
 
 #include <EdkClass/Common.h>
+
 #include <LwGUI/Component.h>
 #include <LwGUI/LwGuiLib.h>
 #include <LwGUI/TextBox.h>
+#include <LwGui/Form.h>
+
 #include <Lib/XmlParserLib.h>
 #include <Lib/VideoLib.h>
 #include <Color.h>
@@ -71,14 +74,16 @@ Gui_Text_SetText(
 	PGUI_TEXT Self = (PGUI_TEXT)vSelf;
 	StrCpy(Self->Text, Text);
 
-	if (Self->Attr.BitmapObject)
+	if (Self->Attr.BitmapObject) {
 		VideoLibDestoryBitmapObject(Self->Attr.BitmapObject);
+		Self->Attr.BitmapObject = NULL;
+	}
 
-	UINT16 Width = ResGetFontMinimalWidth(Text);
+	UINT16 Width = VideoLibGetStringWidth(Text);
 	if (Width == 0)
 		return;
 
-	Self->Attr.BitmapObject = VideoLibCreateBitmapObject(BITMAP_FORMAT_RGBA,
+	Self->Attr.BitmapObject = VideoLibCreateBitmapObject(BITMAP_FORMAT_RGB,
 		Width,
 		16
 	);
@@ -169,8 +174,8 @@ Gui_Text_KeyPress(
 		VideoLibDestoryBitmapObject(Self->Attr.BitmapObject);
 		Self->Attr.BitmapObject = 0;
 	}
-
-	UINT16 Width = ResGetFontMinimalWidth(Self->Text);
+	
+	UINT16 Width = VideoLibGetStringWidth(Self->Text);
 	if (Width == 0)
 		return;
 
@@ -208,6 +213,8 @@ Gui_Text_Draw(VOID* vSelf,
 
 	GUI_RECT Rect;
 	LwGuiGetAbsoluteRect(vSelf, &Rect);
+
+	PGUI_FORM FormObject = (PGUI_FORM)LwGuiGetComponentForm((PCOMPONENT_COMMON_HEADER)Self);
 
 	/* 创建渲染图像对象 */
 
@@ -276,8 +283,15 @@ Gui_Text_Draw(VOID* vSelf,
 
 	}
 
-	Status=VideoLibBitblt(TempBitmapObject,
-		Self->Attr.FormBuffer,)
+	Status = VideoLibBitblt(TempBitmapObject,
+		FormObject->SwapObject,
+		0,
+		0,
+		Rect.x,
+		Rect.y,
+		Rect.Width,
+		Rect.Height
+	);
 
 	Self->Attr.NeedRedraw = FALSE;
 
@@ -322,6 +336,8 @@ CreateTextBox(
 	Text->Attr.NeedRedraw = TRUE;
 	Text->Attr.Alpha = 255;
 
+	Text->Type = GUI_TYPE_TEXTBOX;
+
 	return Text;
 
 }
@@ -361,13 +377,13 @@ Pharse_TextBox_XML(XML_SECTION* Xml, PCOMPONENT_COMMON_HEADER ParentNode)
 		CurrentNode->Attr.Parent = ParentNode;
 
 		GUI_RECT Rect;
-		Rect.x = LeftPair == NULL ? 0 : TranslateAttrToValue(ParentNode->Ops.GetBound(ParentNode)->Width, 
+		Rect.x = LeftPair == NULL ? 0 : AttrReadValue(ParentNode->Ops.GetBound(ParentNode)->Width,
 			(CHAR16*)LeftPair->Value);
-		Rect.y = TopPair == NULL ? 0 : TranslateAttrToValue(ParentNode->Ops.GetBound(ParentNode)->Height, 
+		Rect.y = TopPair == NULL ? 0 : AttrReadValue(ParentNode->Ops.GetBound(ParentNode)->Height,
 			(CHAR16*)TopPair->Value);
-		Rect.Width = WidthPair == NULL ? 0 : TranslateAttrToValue(ParentNode->Ops.GetBound(ParentNode)->Width, 
+		Rect.Width = WidthPair == NULL ? 0 : AttrReadValue(ParentNode->Ops.GetBound(ParentNode)->Width,
 			(CHAR16*)WidthPair->Value);
-		Rect.Height = HeightPair == NULL ? 0 : TranslateAttrToValue(ParentNode->Ops.GetBound(ParentNode)->Height, 
+		Rect.Height = HeightPair == NULL ? 0 : AttrReadValue(ParentNode->Ops.GetBound(ParentNode)->Height,
 			(CHAR16*)HeightPair->Value);
 		CurrentNode->Ops.SetBound(CurrentNode, &Rect);
 
@@ -377,7 +393,7 @@ Pharse_TextBox_XML(XML_SECTION* Xml, PCOMPONENT_COMMON_HEADER ParentNode)
 			);
 
 		CurrentNode->Attr.Parent = ParentNode;
-		LwGuiRegisterComponent((PCOMPONENT_COMMON_HEADER)CurrentNode);
+		//LwGuiRegisterComponent((PCOMPONENT_COMMON_HEADER)CurrentNode);
 		return (PCOMPONENT_COMMON_HEADER)CurrentNode;
 
 	}

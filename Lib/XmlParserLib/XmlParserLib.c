@@ -345,8 +345,6 @@ XpReadHeader(
 		Next = XpSkipBlankChar(Next);
 
 	}
-
-
 }
 
 XML_SECTION*
@@ -384,7 +382,8 @@ XML_SECTION*
 EFIAPI
 XpFindNodeById(
 	XML_SECTION* Root,
-	CHAR16* Id) {
+	CHAR16* Id
+) {
 
 	XML_SECTION* Sec = NULL;
 	PKV_PAIR AttrKv = HkFindPairInHashKv(&Root->AttrHashKV, "Id");
@@ -394,11 +393,9 @@ XpFindNodeById(
 	}
 
 	for (UINTN i = 0;i < Root->ChildrenCount;i++) {
-
 		Sec = XpFindNodeById(Root->Children[i], Id);
 		if (Sec != NULL)
 			return Sec;
-
 	}
 
 	return NULL;
@@ -429,6 +426,7 @@ XpReadSection(
 
 	}
 
+	*Section = NULL;
 	XML_SECTION* NewSection = (XML_SECTION*)AllocateZeroPool(sizeof(XML_SECTION));
 	NewSection->AttrHashKV.MapProc = Default_String_Map_Proc;
 	NewSection->AttrHashKV.CmpProc = Default_String_Cmp_Proc;

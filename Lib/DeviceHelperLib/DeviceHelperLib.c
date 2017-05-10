@@ -2,6 +2,7 @@
 #include <EdkClass/Common.h>
 #include <EdkClass/Helper.h>
 #include <EdkClass/MediaAccess.h>
+#include <EdkClass/Image.h>
 #include <ExtTypes.h>
 
 static LIST_ENTRY HdDeviceList = INITIALIZE_LIST_HEAD_VARIABLE(HdDeviceList);
@@ -142,8 +143,6 @@ DhScanHdPartMap(
 				Node->HdDevHandle = BioDevices[j];
 				UnicodeSPrint(Node->SymbolName, 32, L"fs%d", FsIndex);
 
-				//Print(L"%s\n", Node->SymbolName);
-
 				InsertTailList(&HdDeviceList, &Node->DevNode);
 				FsIndex++;
 
@@ -186,8 +185,6 @@ DhScanHdDeviceMap(
 				Node->HdDevHandle = BioDevices[i];
 				UnicodeSPrint(Node->SymbolName, 32, L"hd%d", i);
 
-				//Print(L"%s\n", Node->SymbolName);
-
 				InsertTailList(&HdDeviceList, &Node->DevNode);
 
 				/* 寻找所有分区节点 */
@@ -226,6 +223,21 @@ DhRetrieveDevice(
 
 }
 
+EFI_HANDLE
+EFIAPI
+DhGetRootDevice(
+) {
+
+	EFI_STATUS Status;
+	EFI_LOADED_IMAGE_PROTOCOL* LdrImage;
+
+	Status = gBS->HandleProtocol(gImageHandle, &gEfiLoadedImageProtocolGuid, &LdrImage);
+	if (EFI_ERROR(Status))
+		return NULL;
+
+	return LdrImage->DeviceHandle;
+
+}
 
 /* 初始化库 */
 

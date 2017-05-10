@@ -56,3 +56,9 @@ EFIAPI
 ResLibCreateResource(
 	IN EFI_HANDLE ImageHandle
 );
+
+EFI_HANDLE
+EFIAPI
+ResLibLocateResourceSection(
+	IN EFI_HANDLE ImageHandle
+);

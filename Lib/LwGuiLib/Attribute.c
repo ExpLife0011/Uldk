@@ -4,6 +4,10 @@
 
 #include <LwGui/LwGuiLib.h>
 
+/*
+读取颜色属性
+接受格式：xxxxxx,xxxxxxxx
+*/
 
 BOOLEAN
 EFIAPI
@@ -36,6 +40,10 @@ AttrReadColor(
 
 }
 
+/*
+读取对齐属性
+*/
+
 UINT16
 EFIAPI
 AttrReadAlignment(
@@ -55,6 +63,10 @@ AttrReadAlignment(
 	return GUI_ALIGN_LEFT;
 
 }
+
+/*
+读取值属性
+*/
 
 UINT16
 EFIAPI

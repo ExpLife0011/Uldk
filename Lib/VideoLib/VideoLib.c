@@ -213,8 +213,6 @@ VideoLibBitblt(
 	else if (Src->Format == BITMAP_FORMAT_RGBA)
 	{
 
-		Print(L"ddddffff\n");
-
 		for (UINT16 i = ActualSrcY;i < ActualSrcY + ActualHeight;i++)
 		{
 
@@ -270,14 +268,17 @@ VideoLibPrintCharToBuffer(
 	UINTN DrawWidth = (FontWidth > (Output->Width - StartX)) ? (Output->Width - StartX) : FontWidth;
 	UINTN DrawHeight = (16 > (Output->Height - StartY)) ? (Output->Height - StartY) : 16;
 
-	Print(L"Draw:%d\n", DrawHeight);
+	if (FontWidth > 8)
+		FontWidth = 16;
+
+	/* 渲染字符 */
 
 	for (UINTN i = StartY;i < StartY + DrawHeight;i++)
 	{
 
 		unsigned char* LineBit = (unsigned char*)(BitData + (i - StartY)*(FontWidth / 8));
 		UINT32 l = LineBit[0];
-		if (FontWidth == 16)
+		if (FontWidth > 8)
 		{
 			l <<= 8;
 			l += LineBit[1];
@@ -371,6 +372,8 @@ VideoLibRenderFont(
 
 }
 
+/* 打开一个图片并返回一个图片对象 */
+
 EFI_HANDLE
 EFIAPI
 VideoLibCreateImage(
@@ -402,8 +405,6 @@ VideoLibCreateImage(
 	EFI_IMAGE_OUTPUT Output;
 	Output.Width = Width;
 	Output.Height = Height;
-
-	Print(L"%d-%d\n", Width, Height);
 
 	if(!ReadPng(&Output, buf, size))
 	{

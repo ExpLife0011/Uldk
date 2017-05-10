@@ -13,6 +13,11 @@ UINTN					TypeListCount = 0;
 
 LIST_ENTRY				FormListHead = INITIALIZE_LIST_HEAD_VARIABLE(FormListHead);
 
+extern	VOID	RegisterListview();
+extern	VOID	RegisterTextBox();
+extern	VOID	RegisterLabel();
+extern	VOID	RegisterForm();
+
 /* ³õÊ¼»¯LwGUILib */
 
 EFI_STATUS
@@ -37,11 +42,10 @@ LwGuiInitialize(
 
 	//gBS->CloseProtocol(gImageHandle, &gEfiGraphicsOutputProtocolGuid, gImageHandle, NULL);
 
-	//RegisterForm();
-	//RegisterLabel();
-	//RegisterTextBox();
-	//RegisterHBox();
-	//RegisterListview();
+	RegisterForm();
+	RegisterLabel();
+	RegisterTextBox();
+	RegisterListview();
 
 	return EFI_SUCCESS;
 

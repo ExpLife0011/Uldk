@@ -30,3 +30,8 @@ EFIAPI
 DhGetLastPathNode(
 	IN EFI_DEVICE_PATH_PROTOCOL* FullPath
 );
+
+EFI_HANDLE
+EFIAPI
+DhGetRootDevice(
+);

@@ -98,5 +98,17 @@
     <ClInclude Include="LwGui\Textbox.h">
       <Filter>头文件\LwGui</Filter>
     </ClInclude>
+    <ClInclude Include="LwGui\ListView.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="EdkClass\Image.h">
+      <Filter>头文件\EdkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="LwGui\Image.h">
+      <Filter>头文件\LwGui</Filter>
+    </ClInclude>
+    <ClInclude Include="PeStruct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

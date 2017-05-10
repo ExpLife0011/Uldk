@@ -33,6 +33,12 @@
     <ClCompile Include="Attribute.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ListView.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LwGuiLib.inf" />

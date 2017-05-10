@@ -143,6 +143,31 @@ Gui_Form_AddChild(
 
 }
 
+/* 删除一个子组件 */
+
+VOID
+EFIAPI
+Gui_Form_DeleteChild(
+	IN VOID* vSelf,
+	IN PCOMPONENT_COMMON_HEADER	Component
+) {
+
+	PGUI_FORM Form = (PGUI_FORM)vSelf;
+	PGUI_RECT Rect = Form->Ops.GetBound(Form);
+	EFI_HANDLE Slice = VideoLibCreateBitmapObject(
+		BITMAP_FORMAT_RGB,
+		Rect->Width,
+		Rect->Height
+	);
+
+	Component->Attr.ChildList.BackLink->ForwardLink = Component->Attr.ChildList.ForwardLink;
+	Component->Attr.ChildList.ForwardLink->BackLink = Component->Attr.ChildList.BackLink;
+	Component->Ops.Destory(Component);
+
+	return;
+
+}
+
 /* 枚举组件 */
 
 VOID
@@ -314,17 +339,15 @@ Gui_Form_SetBackground(
 		Self->Attr.Rect.Width,
 		Self->Attr.Rect.Height
 	);
-	//if (Self->Attr.BitmapObject == NULL)
-	//	return;
-	//VideoLibBitblt(Self->Attr.BitmapObject,
-	//	Self->SwapObject,
-	//	0,
-	//	0,
-	//	0,
-	//	0,
-	//	Self->Attr.Rect.Width,
-	//	Self->Attr.Rect.Height
-	//);
+
+	if (Self->Attr.BitmapObject != NULL) {
+		VideoLibBitblt(Self->Attr.BitmapObject,
+			Self->SwapObject,
+			0, 0, 0, 0,
+			VideoLibGetImageWidth(Self->Attr.BitmapObject),
+			VideoLibGetImageHeight(Self->Attr.BitmapObject)
+		);
+	}
 
 }
 
@@ -340,10 +363,30 @@ Gui_Form_SetColor(
 	PGUI_FORM Self = (PGUI_FORM)vSelf;
 
 	CopyMem(&Self->BgColor, BgColor, sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+	
+	if (Self->Attr.BitmapObject != NULL)
+		VideoLibDestoryBitmapObject(Self->Attr.BitmapObject);
+
+	Self->Attr.BitmapObject = VideoLibCreateBitmapObject(
+		BITMAP_FORMAT_RGB,
+		Self->Attr.Rect.Width,
+		Self->Attr.Rect.Height
+	);
+
+	if (Self->Attr.BitmapObject != NULL) {
+		VideoLibFillRect(
+			Self->Attr.BitmapObject,
+			0, 0,
+			Self->Attr.Rect.Width,
+			Self->Attr.Rect.Height,
+			*((UINT32*)&Self->Attr.BgColor)
+		);
+	}
 
 }
 
-/*
+/* 在窗体中查找组件 */
+
 PCOMPONENT_COMMON_HEADER
 EFIAPI
 Gui_Form_FindComponent(
@@ -352,25 +395,24 @@ Gui_Form_FindComponent(
 ) {
 
 
-	PCONTAINER_COMMON_HEADER Self = (PCONTAINER_COMMON_HEADER)vSelf;
-	if ((Self->Container.ChildCount == 0))
+	PGUI_FORM Self = (PGUI_FORM)vSelf;
+	if ((Self->ChildrenCount == 0))
 		return NULL;
 
-	PCOMPONENT_COMMON_HEADER FirstChild = BASE_CR(Self->Container.Head.BackLink, COMPONENT_COMMON_HEADER, Attr.ChildList);
-	do
-	{
+	PCOMPONENT_COMMON_HEADER FirstChild = BASE_CR(Self->ChildrenList.ForwardLink, COMPONENT_COMMON_HEADER, Attr.ChildList);
+	do {
 
+		/* 如果用户返回false，停止枚举 */
 		if (StrCmp(Name, FirstChild->Attr.Name) == 0)
 			return FirstChild;
 
-		FirstChild = BASE_CR(FirstChild->Attr.ChildList.BackLink, COMPONENT_COMMON_HEADER, Attr.ChildList);
+		FirstChild = BASE_CR(FirstChild->Attr.ChildList.ForwardLink, COMPONENT_COMMON_HEADER, Attr.ChildList);
 
-	} while (&FirstChild->Attr.ChildList != &Self->Container.Head);
+	} while (&FirstChild->Attr.ChildList != &Self->ChildrenList);
 
 	return NULL;
 
 }
-*/
 
 static
 VOID
@@ -383,18 +425,18 @@ Gui_Form_Draw(
 	PGUI_FORM Self = (PGUI_FORM)vSelf;
 	PVIDEO_BITMAP BitmapObject = (PVIDEO_BITMAP)Self->SwapObject;
 
-	VideoLibBitblt(Self->Attr.BitmapObject,
-		Self->SwapObject,
-		0, 0, 0, 0,
-		VideoLibGetImageWidth(Self->Attr.BitmapObject),
-		VideoLibGetImageHeight(Self->Attr.BitmapObject)
-	);
+	//if (Self->Attr.BitmapObject != NULL) {
+	//	VideoLibBitblt(Self->Attr.BitmapObject,
+	//		Self->SwapObject,
+	//		0, 0, 0, 0,
+	//		VideoLibGetImageWidth(Self->Attr.BitmapObject),
+	//		VideoLibGetImageHeight(Self->Attr.BitmapObject)
+	//	);
+	//}
 
 	//先尝试重绘所有子元素
 
 	Self->IterChildren(vSelf, RedrawAll_IterChildCallback);
-
-	while (1);
 
 	GuiHandle->GOP->Blt(
 		GuiHandle->GOP,
@@ -432,7 +474,9 @@ CreateForm(
 	Form->SetColor = Gui_Form_SetColor;
 	Form->NextForm = Gui_Form_NextForm;
 	Form->AddChild = Gui_Form_AddChild;
+	Form->DeleteChild = Gui_Form_DeleteChild;
 	Form->IterChildren = Gui_Form_IterChildren;
+	Form->FindComponent = Gui_Form_FindComponent;
 
 	Form->Attr.Visible = TRUE;
 	Form->Type = GUI_TYPE_FORM;
@@ -494,9 +538,11 @@ Pharse_Form_XML(XML_SECTION* Xml, PCOMPONENT_COMMON_HEADER ParentNode)
 		if (CurrentNode == NULL)
 			return NULL;
 
+		/* 设置背景属性 */
 		if (BgPair)
 			CurrentNode->Ops.SetBackground(CurrentNode, (CHAR16*)BgPair->Value);
 
+		/* 设置超时属性 */
 		if (ToPair)
 			CurrentNode->Timeout = StrDecimalToUintn((CHAR16*)ToPair->Value);
 

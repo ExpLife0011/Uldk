@@ -118,6 +118,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="EdkClass\Common.h" />
     <ClInclude Include="EdkClass\Helper.h" />
+    <ClInclude Include="EdkClass\Image.h" />
     <ClInclude Include="EdkClass\MediaAccess.h" />
     <ClInclude Include="EdkClass\NetProtocolStack.h" />
     <ClInclude Include="EdkClass\Video.h" />
@@ -134,9 +135,12 @@
     <ClInclude Include="Lib\XmlParserLib.h" />
     <ClInclude Include="LwGui\Component.h" />
     <ClInclude Include="LwGui\Form.h" />
+    <ClInclude Include="LwGui\Image.h" />
     <ClInclude Include="LwGui\Label.h" />
+    <ClInclude Include="LwGui\ListView.h" />
     <ClInclude Include="LwGui\LwGuiLib.h" />
     <ClInclude Include="LwGui\Textbox.h" />
+    <ClInclude Include="PeStruct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

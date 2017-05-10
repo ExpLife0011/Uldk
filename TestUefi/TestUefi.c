@@ -28,8 +28,6 @@ TestMain(
 	DhInitDeviceHelperLib();
 	
 	EmInit();
-	EmSetEnv(L"TestEnv", (void*)L"TestValue", (StrLen(L"TestValue") + 1) * 2);
-	Print(L"%s\n", EmGetEnv(L"TestEnv"));
 
 	EFI_HANDLE GG = FileLibCreateFile(L"(tftp)/Font.bin", EFI_FILE_MODE_READ, 0);
 
@@ -58,21 +56,28 @@ TestMain(
 
 	LwGuiInitialize();
 
-	PGUI_FORM Form = CreateForm(L"ddd");
-	Form->Ops.SetBackground(Form, L"Background.png");
+	GG = FileLibCreateFile(L"config.xml", EFI_FILE_MODE_READ, 0);
 
-	PGUI_LABEL Label = CreateLabel(L"uuu");
-	GUI_RECT Rect = { 10,10,100,40 };
-	Label->Ops.SetBound(Label, &Rect);
-	Label->SetText(Label, L"dddd");
+	Size = FileLibGetFileSize(GG);
+	Buffer = (CHAR16*)AllocatePool(Size);
+	FileLibReadFile(GG, Buffer, (UINT32)Size);
 
-	Form->AddChild(Form, (PCOMPONENT_COMMON_HEADER)Label);
+	PXML_SECTION FormXML;
+	XpReadSection(Buffer, &FormXML, NULL);
 
-	
+	PGUI_FORM Form = CreateFormFromXML(FormXML);
+
+	//Form->Ops.SetBackground(Form, L"Background.png");
+
+	//PGUI_LABEL Label = CreateLabel(L"uuu");
+	//GUI_RECT Rect = { 10,10,100,40 };
+	//Label->Ops.SetBound(Label, &Rect);
+	//Label->SetText(Label, L"dddd");
+
+	//Form->AddChild(Form, (PCOMPONENT_COMMON_HEADER)Label);
 
 	Form->Ops.Draw(Form, NULL);
 
-	while (1);
 
 	return EFI_SUCCESS;
 
